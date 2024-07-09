@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block link%}{% endblock%}
+
+{% block title %}
+Reveneu by dates
+{% endblock %}
+{% block content %}
+<h1>Reveneu by dates</h1>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table, th, td {
+        border: 1px solid black;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+</head>
+<body>
+<h1>Revenue by Date</h1>
+<form method="get" action="/Revenue">
+    <label for="interval">Select Interval:</label>
+    <select name="interval" id="interval">
+        <option value="daily" {% if interval == 'daily' %}selected{% endif %}>Daily</option>
+        <option value="weekly" {% if interval == 'weekly' %}selected{% endif %}>Weekly</option>
+        <option value="monthly" {% if interval == 'monthly' %}selected{% endif %}>Monthly</option>
+        <option value="yearly" {% if interval == 'yearly' %}selected{% endif %}>Yearly</option>
+    </select>
+    <button type="submit">Show Revenue</button>
+</form>
+<table>
+    <tr>
+        <th>Period</th>
+        <th>Revenue</th>
+    </tr>
+    {% for row in revenue_data %}
+    <tr>
+        <td>{{ row.period }}</td>
+        <td>{{ row.revenue }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

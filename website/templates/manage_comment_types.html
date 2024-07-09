@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block link%}{% endblock%}
+
+{% block title %}
+Leave a comment! 
+{% endblock %}
+{% block content %}
+
+<h1>Manage Comment Types</h1>
+
+    <h2>Add New Comment Type</h2>
+    <form method="POST" action="{{ url_for('views.manage_comment_types') }}">
+        <label for="type_name">Type Name:</label>
+        <input type="text" id="type_name" name="type_name" required>
+        <button type="submit" name="add_type">Add Type</button>
+    </form>
+
+    <h2>Delete Comment Type</h2>
+    <form method="POST" action="{{ url_for('views.manage_comment_types') }}">
+        <label for="type_id">Type ID:</label>
+        <input type="number" id="type_id" name="type_id" required>
+        <button type="submit" name="delete_type">Delete Type</button>
+    </form>
+
+    <h2>Existing Comment Types</h2>
+    <ul>
+        {% for comment_type in comment_types %}
+            <li>ID: {{ comment_type.id }} - Type: {{ comment_type.type_name }}</li>
+        {% endfor %}
+    </ul>
+    <br>
+    <a class="text-background" href="{{ url_for('views.home') }}">Back to Home</a>
+    {% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block link%}{% endblock%}
+
+{% block title %}
+{% endblock %}
+{% block content %}
+<h1>My Comments</h1>
+    {% if comments %}
+        <ul>
+            {% for comment in comments %}
+                <li>{{ comment.comment_data }}{{ comment.user_id}} {{ comment.date_created }}
+                    <button type="button" class="close" onClick="deleteComment('{{ comment.id }}')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </li>
+                    <br>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comments found.</p>
+    {% endif %}
+{% endblock %}
+{% block javascript %}
+  <script type="text/javascript">
+    function deleteComment(commentId) {
+        fetch("/delete-comment", {
+            method: "POST",
+            body: JSON.stringify({ commentId: commentId }),
+           }).then((_res) => {
+            window.location.href = "/ViewMyComments";
+          });
+          }
+    </script>
+      {% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %} 
+
+{% block title %}Delete Component Page{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+.container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Delete Component</h1>
+    <form id="DeleteComponent" method="POST">
+        <label for="ID">ID:</label>
+        <input type="number" id="ID" name="ID" required>
+        <br>
+        <button type="submit" onclick="DeleteComponent()">Update</button>
+    </form>
+
+    <script>
+        function DeleteComponent() {
+            var ID = document.getElementById("ID").value;
+
+
+            if (ID == null) {
+                alert("Invalid ID");
+            } else {
+                var formDataComplete = new FormData();
+                formData.append("ID", ID);
+
+
+                fetch("/CompoDelete", {  // Change the endpoint to "/CompoUpdate"
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json(); // or response.text() if expecting a different type
+                })
+                .then(data => {
+                    // Handle successful response
+                    console.log(data);
+                    alert("User updated successfully!");
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error("There was a problem with the fetch operation:", error);
+                });
+            }
+        }
+    </script>
+</body>
+{% endblock%}

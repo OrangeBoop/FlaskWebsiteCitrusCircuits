@@ -1,0 +1,52 @@
+{% extends "base.html" %} 
+
+{% block title %}Catalog{% endblock %}
+
+{% block link%}
+<link rel="stylesheet" type="text/css" href="static/design.css">
+ {% endblock%}
+
+ {% block content %}
+ <head>
+<style>
+
+body {
+  background-color: rgb(245, 143, 75);
+}
+</style>
+ </head>
+ <html lang="en">
+ <body>
+    <h1 class="page-title">PC Components Catalog</h1>
+
+    {% for component in components %}
+    <form method="POST" action="{{ url_for('views.catalog') }}">
+        <div class="component-container">
+            {% if component.isOnSale %}
+            <img class="component-image" src="{{ url_for('static', filename='images/' + component.image_url) }}" alt="{{ component.name }}">
+            <h2 class="component-name">{{ component.name }}</h2>
+            <p class="component-description">{{ component.description }}</p>
+            <p class="component-price">Price: {{ currencySymbol }} {{ component.price * currencyMultiplier * component.priceModifier }}</p>
+            <p class="component-stock">Stock: {{ component.stock }}</p>
+            <p class="component-stock">ID: {{component.id}}</p>
+            <div class="sale-tag">On Sale!</div>
+            <br>
+            {% endif %}
+            {% if not component.isOnSale %}
+            <img class="component-image" src="{{ url_for('static', filename='images/' + component.image_url) }}" alt="{{ component.name }}">
+            <h2 class="component-name">{{ component.name }}</h2>
+            <p class="component-description">{{ component.description }}</p>
+            <p class="component-price">Price: {{ currencySymbol }} {{ component.price * currencyMultiplier }}</p>
+            <p class="component-stock">Stock: {{ component.stock }}</p>
+            <p class="component-stock">ID: {{component.id}}</p>
+            {% endif %}
+            <input type="hidden" id="CompoID" name="CompoID" value="{{component.id}}">
+            <button type="submit" name="order">To buy this product!</button>
+        </div>
+    </form>
+    {% endfor %}
+</body>
+</html>
+{% endblock %}
+{% block javascript %}
+{% endblock %}

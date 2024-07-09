@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block link%}{% endblock%}
+
+{% block title %}
+Site Statistics
+{% endblock %}
+
+
+{% block content %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table, th, td {
+        border: 1px solid black;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+<body>
+    <h1>Dashboard</h1>
+    
+    <h2>Highest Order Paid</h2>
+    <p>Order ID: {{ highest_order.id }}</p>
+    <p>Amount Paid: {{ highest_order.amountPaid }}</p>
+    <p>User ID: {{ highest_order.user_id }}</p>
+
+    <h2>User with the Most Orders</h2>
+    <p>User ID: {{ most_orders_user.User.id }}</p>
+    <p>Email: {{ most_orders_user.User.email }}</p>
+    <p>Number of Orders: {{ most_orders_user.order_count }}</p>
+
+    <h2>Newest User</h2>
+    <p>User ID: {{ newest_user.id }}</p>
+    <p>Email: {{ newest_user.email }}</p>
+    <p>First Name: {{ newest_user.first_name }}</p>
+    <p>Country: {{ newest_user.Country }}</p>
+
+    <h2>Oldest User</h2>
+    <p>User ID: {{ oldest_user.id }}</p>
+    <p>Email: {{ oldest_user.email }}</p>
+    <p>First Name: {{ oldest_user.first_name }}</p>
+    <p>Country: {{ oldest_user.Country }}</p>
+
+    <h2>Most Wanted Component</h2>
+    <p>Component ID: {{ most_wanted_component.id }}</p>
+    <p>Name: {{ most_wanted_component.name }}</p>
+    <p>Description: {{ most_wanted_component.description }}</p>
+    <p>Price: {{ most_wanted_component.price }}</p>
+    <p>Times Ordered: {{ most_wanted_component_count }}</p>
+</body>
+{% endblock %}

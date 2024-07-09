@@ -1,0 +1,36 @@
+{% extends "base.html" %} 
+
+{% block title %}Add stock to a component{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+.container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Add stock to a component</h1>
+    <form id="addStock" method="POST" >
+        <label for="ID">ID:</label>
+        <input type="number" id="ID" name="ID" required>
+        <br>
+        <label for="NEWSTOCK">Enter new amount of stock:</label>
+        <input type="number" id="NEWSTOCK" name="NEWSTOCK" required>
+        <br>
+        <form action="/addStock" method="POST">
+            <button type="submit">Add Stock</button>
+        </form>
+    </form>
+
+{% endblock%}

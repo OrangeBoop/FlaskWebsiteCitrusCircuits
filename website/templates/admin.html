@@ -1,0 +1,130 @@
+{% extends "base.html" %} 
+
+{% block title %}Admin Page{% endblock %}
+
+{% block link%}
+<link rel="stylesheet" type="text/css" href="static/design.css">
+ {% endblock%}
+
+ {% block content %}
+ <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Page</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Admin Page - User List</h1>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th> ID </th>
+                    <th> Email </th>
+                    <th> First Name </th>
+                    <th> Currecy Selected</th>
+                    <th> Order by user</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td> {{ user.id }} </td>
+                        <td> {{ user.email }} </td>
+                        <td> {{ user.first_name }} </td>
+                        <td> {{ user.Country }} </td>
+                        <td>
+                            <div><button type="button" onclick="userOrders('{{ user.id }}')">
+                                {{ user.first_name }} Order
+                            </button></div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <h3>Command table</h3>
+        <table>
+            <tr>
+                <th>Component Editor</th>
+                <th>User Editor</th>
+                <th>Shop Editor</th>
+                <th>Comment Editor</th>
+            </tr>
+            <tr>
+                <td><p><a class="text-background" href="/CompoUpdate">Update Component Info</a></p></td>
+                <td><p><a class="text-background" href="/EditUserAdmin">Edit User Info</a></p></td>
+                <td><p><a class="text-background" href="/addStock">Add Stock</a></p></td>
+                <td><p><a class="text-background" href="/viewCommentsAdmin">View Comments</a></p></td>
+            </tr>
+            <tr>
+                <td><p><a class="text-background" href="/CompoDelete">Delete Component Info</a></p></td>
+                <td><p><a class="text-background" href="/DeleteAccountAdmin">Delete User</a></p></td>
+                <td><p><a class="text-background" href="/AddSale">Add Sale </a></p></td>
+                <td><p><a class="text-background" href="/manage_comment_types">Manage Comments type</a></p></td>
+            </tr>
+            <tr>
+                <td><p><a class="text-background" href="/CompoCreate">Create Component Info</a></p></td>
+                <td></td>
+                <td><p><a class="text-background" href="/Revenue">Revenue</a></p></td>
+                <td></td>
+            </tr>
+        </table>
+        <br>
+        <h3><a class="text-background" href="/Statistics">Site Statistics</a></h3>
+    <br>
+    {% for component in components %}
+        <div class="component-container">
+            {% if component.isOnSale %}
+            <img class="component-image" src="{{ url_for('static', filename='images/' + component.image_url) }}" alt="{{ component.name }}">
+            <h2 class="component-name">{{ component.name }}</h2>
+            <p class="component-description">{{ component.description }}</p>
+            <p class="component-price">Price: {{ currencySymbol }} {{ component.price * currencyMultiplier * component.priceModifier }}</p>
+            <p class="component-stock">Stock: {{ component.stock }}</p>
+            <p class="component-stock">ID: {{component.id}}</p>
+            <div class="sale-tag">On Sale!</div>
+            {% endif %}
+            {% if not component.isOnSale %}
+            <img class="component-image" src="{{ url_for('static', filename='images/' + component.image_url) }}" alt="{{ component.name }}">
+            <h2 class="component-name">{{ component.name }}</h2>
+            <p class="component-description">{{ component.description }}</p>
+            <p class="component-price">Price: {{ currencySymbol }} {{ component.price * currencyMultiplier }}</p>
+            <p class="component-stock">Stock: {{ component.stock }}</p>
+            <p class="component-stock">ID: {{component.id}}</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+    </body>
+    </html>
+
+
+
+    
+
+    
+
+{% endblock %}
+{% block javascript %}
+<script>
+function userOrders(userID)
+{
+        window.location.href = "/userOrders?userID=" + userID;
+}
+
+</script> 
+{% endblock %}
+

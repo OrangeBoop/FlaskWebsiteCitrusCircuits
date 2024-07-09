@@ -1,0 +1,57 @@
+{% extends "base.html" %} 
+
+{% block title %}{{user.first_name}} Orders Page{% endblock %}
+
+{% block link%}
+<link rel="stylesheet" type="text/css" href="static/design.css">
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+ {% endblock%}
+
+{% block content %}
+
+<h1>User Orders</h1>
+    <h2>User Information</h2>
+    <p>User ID: {{ user.id }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>First Name: {{user.first_name}}</p>
+
+    <h2>Orders</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Address</th>
+                <th>Items</th>
+                <th>Date</th>
+                <th>Amount Paid</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in user_orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.address }}</td>
+                <td>
+                    {{ get_component_names(order.orderItems) }}
+                </td>
+                <td>{{ order.orderDate }}</td>
+                <td>{{ currencySymbol }} {{ order.amountPaid * currencyMultiplier}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

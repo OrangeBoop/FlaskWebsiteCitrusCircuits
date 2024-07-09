@@ -1,0 +1,85 @@
+{% extends "base.html" %} 
+
+{% block title %}Update Page{% endblock %}
+
+{% block link%}
+<link rel="stylesheet" type="text/css" href="static/design.css">
+ {% endblock%}
+
+ {% block content %}
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update User</title>
+</head>
+<body>
+    <h1>Update User</h1>
+    <form id="updateForm" method="POST">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+        <br>
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+        <br>
+        <label for="confirmPassword">Confirm New Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <br>
+        <select class="select__input" name="country-selector" id="country-selector">
+            <option value="0">Select Country Currency</option>
+            <option value="IL">Israel</option>
+            <option value="UK">United Kingdom</option>
+            <option value="USA">United States of America</option>
+        </select>
+        <br>
+        <button type="button" onclick="updateUser()">Update</button>
+        
+    </form>
+
+    <script>
+        function updateUser() {
+            var email = document.getElementById("email").value;
+            var firstName = document.getElementById("firstName").value;
+            var newPassword = document.getElementById("newPassword").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var Country = document.getElementById("country-selector").value;
+
+
+            if (newPassword !== confirmPassword) {
+                alert("Passwords do not match. Please check and try again.");
+            } else {
+                var formData = new FormData();
+                formData.append("email", email);
+                formData.append("firstName", firstName);
+                formData.append("newPassword", newPassword);
+                formData.append("Country", Country);
+
+                fetch("/update", {  // Change the endpoint to "/update"
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json(); // or response.text() if expecting a different type
+                })
+                .then(data => {
+                    // Handle successful response
+                    console.log(data);
+                    alert("User updated successfully!");
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error("There was a problem with the fetch operation:", error);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+ {% endblock %}

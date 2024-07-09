@@ -1,0 +1,86 @@
+{% extends "base.html" %} 
+
+{% block title %}New Component Create Page{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+.container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Create Component</h1>
+    <form id="createComponent" method="POST">
+        <label for="NewName">Component Name:</label>
+        <input type="text" id="NewName" name="NewName" required>
+        <br>
+        <label for="Description">Description:</label>
+        <input type="text" id="Description" name="Description" required>
+        <br>
+        <label for="imageName">imageName:</label>
+        <input type="text" id="imageName" name="imageName" required>
+        <br>
+        <label for="Price">Price:</label>
+        <input type="number" id="Price" name="Price" required>
+        <br>
+        <label for="Stock">Stock:</label>
+        <input type="number" id="Stock" name="Stock" required>
+        <br>
+        <button type="submit" onclick="createComponent()">Create New Component</button>
+    </form>
+
+    <script>
+        function createComponent() {
+            var NewName = document.getElementById("NewName").value;
+            var Description = document.getElementById("Description").value;
+            var imageName = document.getElementById("imageName").value;
+            var Price = document.getElementById("Price").value;
+            var Stock = document.getElementById("Stock").value;
+
+
+            if (ID == null) {
+                alert("Invalid ID");
+            } else {
+                var formDataComplete = new FormData();
+                formData.append("NewName", NewName);
+                formData.append("Description", Description);
+                formData.append("imageName",imageName);
+                formData.append("Price",Price);
+                formData.append("Stock",Stock);
+
+
+                fetch("/CompoCreate", {  // Change the endpoint to "/CompoUpdate"
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json(); // or response.text() if expecting a different type
+                })
+                .then(data => {
+                    // Handle successful response
+                    console.log(data);
+                    alert("User updated successfully!");
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error("There was a problem with the fetch operation:", error);
+                });
+            }
+        }
+    </script>
+</body>
+{% endblock%}

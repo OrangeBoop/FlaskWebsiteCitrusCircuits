@@ -1,0 +1,94 @@
+{% extends "base.html" %} 
+
+{% block title %}Edit User{% endblock %}
+
+{% block link%}
+<link rel="stylesheet" type="text/css" href="static/design.css">
+ {% endblock%}
+
+ {% block content %}
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit User</title>
+    <style>
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit User</h1>
+        <form action="/EditUserAdmin" method="POST">
+            <label for="ID">User ID:</label>
+            <input type="number" id="ID" name="ID" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <select class="select__input" name="country-selector" id="country-selector">
+                <option value="0">Select Country Currency</option>
+                <option value="IL">Israel</option>
+                <option value="UK">United Kingdom</option>
+                <option value="USA">United States of America</option>
+            </select>
+            <br/>
+            <input type="submit" value="Edit">
+        </form>
+    </div>
+
+    <script>
+        function DeleteUser() {
+            var ID = document.getElementById("ID").value;
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+
+            // Regular expressions for validation
+            var nameRegex = /^[a-zA-Z\s]*$/;
+            var emailRegex = /^[^\s@]+@gmail\.com$/;
+
+            if (!name.match(nameRegex) || !email.match(emailRegex) || ID != null || password!= null) {
+                alert("Information is InValid please change accordingly");
+            } else {
+                var formData = new FormData();
+                formData.append("ID", ID);
+                formData.append("name", name);
+                formData.append("email", email);
+                formData.append("password", password);
+
+                fetch("/EditUserAdmin", {  // Change the endpoint to "/DeleteAccountAdmin"
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json(); // or response.text() if expecting a different type
+                })
+                .then(data => {
+                    // Handle successful response
+                    console.log(data);
+                    alert("User updated successfully!");
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error("There was a problem with the fetch operation:", error);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+ {% endblock %}

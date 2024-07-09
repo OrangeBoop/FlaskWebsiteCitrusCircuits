@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block link%}{% endblock%}
+
+{% block title %}
+Leave a comment! 
+{% endblock %}
+{% block content %}
+<h1>Add a Comment</h1>
+    <form method="POST" action="{{ url_for('views.addComment') }}">
+        <label for="comment_type">Type of Comment:</label>
+        <select id="comment_type" name="comment_type">
+            {% for type in comment_types%}
+            <option value="{{type.type_name}}">{{type.type_name}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="comment_data">Comment:</label>
+        <textarea id="comment_data" name="comment_data" required></textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <p><a class="text-background" href="/ViewMyComments">View My Reviews</a></p>
+{% endblock %}

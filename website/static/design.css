@@ -1,0 +1,111 @@
+.text-background {
+    text-decoration: none;
+    color: #fff;
+    background-color: #e78e19;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .text-background:hover {
+    background-color: #dd7717;
+    color: rgb(82, 51, 22);
+    text-decoration: none;
+  }
+
+/* Create a container for the textarea and center it on the page */
+.container1 {
+  width: 49.5%; /* Adjust the width as needed */
+  height:60vh;
+  padding: 20px; /* Add padding to the textarea */
+  border: 2px solid #787d7a;
+  border-radius: 5px solid rgb(3, 73, 30);
+  float:left;
+  text-align: left;
+  resize: none;
+  margin-bottom: 2%;
+}
+.container2 {
+  width: 49.5%; /* Adjust the width as needed */
+  height:60vh;
+  padding: 20px; /* Add padding to the textarea */
+  border: 2px solid #787d7a;
+  border-radius: 5px solid rgb(3, 73, 30);
+  float:right;
+  text-align: left;
+  resize: none;
+  margin-bottom: 2%;
+
+}
+
+.spacer {
+  height: 3%; /* Adjust the height as needed to create space */
+}
+
+.notesTextArea {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%; /* Adjust the width as needed */
+  height:15vh;
+  padding: 20px; /* Add padding to the textarea */
+  border: 2px solid #787d7a;
+  border-radius: 5px solid rgb(3, 73, 30);
+  resize: vertical;
+  margin-bottom: 2%;
+}
+.publishedNoteTextArea
+{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  border: 2px solid #ffffff;
+  resize:none;
+}
+.close
+{
+  position: absolute; /* Position the "X" button absolutely within the list item */
+  top: 30%; /* Adjust the top position as needed */
+  right: 10px; /* Adjust the right position as needed */
+  z-index: 2;
+  float:right;
+}
+.thdesign {
+  border: 12px solid #333; /* Add a 1-pixel solid border to all th elements */
+  padding: 8px; /* Add padding for better spacing */
+  background-color: #2E8B57;
+}
+.page-title {
+  color: #744318;
+}
+
+.component-container {
+  border: 10px solid rgb(255, 255, 255);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: rgb(253, 195, 148);
+}
+
+.component-image {
+  max-width: 100%;
+  max-height: 160px;
+  border-radius: 4px;
+  float: right;
+}
+
+.component-name {
+  color: #268136;
+}
+
+.component-description,
+.component-price,
+.component-stock {
+  color: #555;
+}
+
+#map {
+  height: 400px; /* Set a specific height for the map */
+  width: 100%; /* Allow the map to fill the width of its parent container */
+}

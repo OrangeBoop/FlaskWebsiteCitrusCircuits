@@ -1,0 +1,116 @@
+{% extends "base.html" %} 
+
+{% block title %}Component Update Page{% endblock %}
+
+{% block content %}
+
+<body>
+    <h1>Address Map and Secure Payment</h1>
+    <!-- Map container -->
+    <div id="map"></div>
+    <!-- Payment form container -->
+    <div class="container">
+        <h2>Secure Payment</h2>
+        <form id="paymentForm" method="POST" action="/FinalizingOrder">
+            <label for="fullName">Full Name on Card</label>
+            <input type="text" id="fullName" name="fullName" required>
+            
+            <label for="cardNumber">Card Number</label>
+            <input type="text" id="cardNumber" name="cardNumber" pattern="[0-9]{16}" required>
+            
+            <label for="expirationDate">Expiration Date (MM/YY)</label>
+            <input type="text" id="expirationDate" name="expirationDate" pattern="(?:0[1-9]|1[0-2])\/[0-9]{2}" placeholder="MM/YY" required>
+            
+            <label for="cvv">CVV</label>
+            <input type="number" id="cvv" name="cvv" min="100" max="999" required>
+            
+            <label for="address">Address</label>
+            <textarea id="addressDisplay" readonly placeholder="Address will be displayed here"></textarea>
+            <input type="hidden" id="address" name="address"> <!-- Hidden input to store address -->
+            <br>
+            <input type="submit" value="Submit Payment">
+        </form>
+
+        
+    </div>
+
+    <script>
+        // Initialize map
+        var map = L.map('map').setView([0, 0], 2); // Initial view set to world
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Initialize Geocoder with Nominatim provider
+        var geocoder = L.Control.Geocoder.nominatim();
+
+        // Add Geocoder control to the map
+        L.Control.geocoder({
+            geocoder: geocoder
+        }).addTo(map);
+
+        // Function to display address in textarea when map is clicked
+        map.on('click', function(event) {
+            // Use reverse geocoding to retrieve address from clicked coordinates
+            geocoder.reverse(event.latlng, map.options.crs.scale(map.getZoom()), function(results) {
+                if (results.length > 0) {
+                    var address = results[0].name || results[0].properties.label; // Get address from results
+                    document.getElementById('addressDisplay').value = address; // Update textarea with address
+                    document.getElementById('address').value = address; // Update hidden input with address
+                } else {
+                    document.getElementById('addressDisplay').value = 'Address not found';
+                    document.getElementById('address').value = ''; // Clear hidden input if address not found
+                }
+            });
+        });
+    </script>
+
+<style>
+    /* Define map container */
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+
+    #coordinates {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+        }
+    /* Define form container */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+/* Form fields */
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+/* Submit button */
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+</style>
+{% endblock %}
+
+
+

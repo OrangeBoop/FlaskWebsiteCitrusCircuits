@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block link%}{% endblock%}
+
+{% block title %}
+Sign-Up
+{% endblock %}
+
+<head>
+    <style>
+.container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+.select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+</style>
+</head>
+{% block content%}
+
+<form method ="POST">
+    <h3 align="center">Sign-Up</h3>
+    <div class "form-group">
+        <lable for="email">Email Adress</lable>
+        <input 
+            type="email" 
+            class="form-control" 
+            id="email" 
+            name="email" 
+            placeholder="Enter email"
+            />
+    </div>
+    <br/>
+    <div class "form-group">
+        <lable for="FirstName">First Name</lable>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="firstName" 
+            name="firstName" 
+            placeholder="Enter first name"
+            />
+    </div>
+    <br/>
+    <div class "form-group">
+        <lable for="password1">Password</lable>
+        <input 
+            type="password" 
+            class="form-control" 
+            id="password1" 
+            name="password1" 
+            placeholder="Enter password"
+            />
+    </div>
+    <br/>
+    <div class "form-group">
+        <lable for="password2">Confirm Password</lable>
+        <input 
+            type="password" 
+            class="form-control" 
+            id="password2" 
+            name="password2" 
+            placeholder="Confirm password"
+            />
+    </div>
+    <div class "form-group">
+    <select class="select__input" name="country-selector" id="country-selector">
+        <option value="0">Select Country Currency</option>
+        <option value="IL">Israel</option>
+        <option value="UK">United Kingdom</option>
+        <option value="USA">United States of America</option>
+      </select> </div>
+      <br />
+    <br/>
+    <button type = "submit" class = "btn btn-primary">Submit</button>
+</form>
+
+            {% endblock %}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charser="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous"
+      />
+      <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        crossorigin="anonymous"
+      />
+
+      <style>
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: #666666;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="password"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="email"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+      .custom-button {
+            background-color: #343a40; /* Dark gray background */
+            color: #9a9da0; /* White text */
+            padding: 0px 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Smooth transition */
+      }
+
+      .custom-button:hover {
+            background-color: #cccecf; /* Lighten the background on hover */
+      }
+      .sale-tag {
+        background-color: #ff0000; /* Red background color */
+        color: #ffffff; /* White text color */
+        font-weight: bold;
+        padding: 5px 10px; /* Padding to make the tag more visible */
+        border-radius: 5px; /* Rounded corners */
+    }
+      </style>
+      <link rel="stylesheet" type="text/css" href="static/design.css">    
+
+      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+      <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css">
+      <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+      {% block link%}{% endblock%}
+            <title>{% block title %}Home{% endblock %}</title>
+        </head>
+        <body>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <button
+                class="navbar-toggler-icon"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbar"
+              >
+              </button>
+              <div class="collapse navbar-collapse" id="navbar">
+                <div class="navbar-nav">
+                  {% if user.is_authenticated %}
+                  <a class="nav-item nav-link" id="home" href="/">Home</a>
+                  <a class="nav-item nav-link" id="update" href="/update">Update</a>
+                  <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                  <a class="nav-item nav-link" id="delete" href="/Bdelete">Delete</a>
+
+                  <div class="nav-item nav-link"><button class="custom-button" type="button" onclick="MyCart('{{ user.id }}')">
+                    {{ user.first_name }}
+                </button></div>
+
+                  {% else %}
+                  <a class="nav-item nav-link" id="login" href="/login">Login</a>
+                  <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
+                  {% endif%}
+                </div>
+              </div>
+            </nav>
+
+
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %} {% for category, message in messages %} {% if category ==
+                'error' %}
+                <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                {% else %}
+                <div class="alert alert-success alter-dismissable fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+            <div class="container">
+            {% block content%}
+            {% endblock %}
+            </div>
+
+        <script
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"
+      ></script>
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"
+      ></script>
+      <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"
+      ></script>
+      <script>
+        function MyCart(userID)
+            {
+                window.location.href = "/cartPage?userID=" + userID;
+            }
+    </script>
+
+      {% block javascript %}
+
+        {% endblock %}
+        </body>
+</html>

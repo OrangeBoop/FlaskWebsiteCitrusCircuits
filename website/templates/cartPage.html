@@ -1,0 +1,43 @@
+{% extends "base.html" %} 
+
+{% block title %}{{user.first_name}} Orders Page{% endblock %}
+
+{% block content %}
+
+<h1>User Orders</h1>
+    <h2>User Information</h2>
+    <p>User ID: {{ user.id }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>First Name: {{user.first_name}}</p>
+
+    <h2>My Cart</h2>
+            {% for component in components_list %}
+            <div class="component-container">
+                {% if component.isOnSale %}
+                <img class="component-image" src="{{ url_for('static', filename='images/' + component.image_url) }}" alt="{{ component.name }}">
+                <h2 class="component-name">{{ component.name }}</h2>
+                <p class="component-description">{{ component.description }}</p>
+                <p class="component-price">Price: {{ currencySymbol }} {{ component.price * currencyMultiplier * component.priceModifier }}</p>
+                <p class="component-stock">Amount: {{ ID_counter[component.id] }}</p>
+                <p class="component-stock">ID: {{component.id}}</p>
+                <div class="sale-tag">On Sale!</div>
+                <br>
+                {% endif %}
+                {% if not component.isOnSale %}
+                <img class="component-image" src="{{ url_for('static', filename='images/' + component.image_url) }}" alt="{{ component.name }}">
+                <h2 class="component-name">{{ component.name }}</h2>
+                <p class="component-description">{{ component.description }}</p>
+                <p class="component-price">Price: {{ currencySymbol }} {{ component.price * currencyMultiplier }}</p>
+                <p class="component-stock">Amount: {{ ID_counter[component.id] }}</p>
+                <p class="component-stock">ID: {{component.id}}</p>
+                {% endif %}
+                
+            </div>
+            {% endfor %}
+
+            <p class="component-stock">Total Price: {{ currencySymbol }} {{sum1}}</p>
+
+            <h3><a class="text-background" href="/DeleteFromCart">Delete from Cart</a></h3>
+            <h3><a class="text-background" href="/FinalizingOrder">Order</a></h3>
+       
+{% endblock %}

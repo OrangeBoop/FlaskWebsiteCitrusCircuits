@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block link%}{% endblock%}
+
+{% block title %}
+Select Type of comments you would like to see
+{% endblock %}
+{% block content %}
+<h1>Select Comment Type</h1>
+    <form method="POST" action="{{ url_for('views.ViewCommentTypes') }}">
+        <label for="comment_type">Type of Comment:</label>
+        <select id="comment_type" name="comment_type">
+            {% for type in comment_types%}
+            <option value="{{type.type_name}}">{{type.type_name}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

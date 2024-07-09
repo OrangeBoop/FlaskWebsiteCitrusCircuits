@@ -1,0 +1,27 @@
+{% extends "base.html" %} 
+
+{% block link%}
+<link rel="stylesheet" type="text/css" href="static/design.css"> 
+
+{% endblock%}
+
+{% block title %}
+Home
+{% endblock %}
+
+
+{% block content%}
+        <br/>
+        <h3>Welcome {{user.first_name}} to the home page please select your service</h3>
+        <br/>
+        <p><a class="text-background" href="/notes">Notes</a></p>
+        <p><a class="text-background" href="/catalog">Catalog</a></p>
+        <p><a class="text-background" href="/addComment">Leave a Review!</a></p>
+        <p><a class="text-background" href="/ViewCommentTypes">View Reviews</a></p>
+        
+
+        {% if current_user.is_authenticated and current_user.email == 'admin@gmail.com' %}
+        <p><a class="text-background" href="/admin">Admin Page</a></p>
+        {% endif %}
+
+            {% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %} 
+
+{% block title %} Order {{ component.name }} {% endblock %}
+
+{% block link%}
+<link rel="stylesheet" type="text/css" href="static/design.css">
+{% endblock%}
+
+{% block content %}
+
+<h1>Order Details</h1>
+
+
+<div class="component-container">
+    {% if component.isOnSale %}
+        <img class="component-image" src="{{ url_for('static', filename='images/' + component.image_url) }}" alt="{{ component.name }}">
+        <h2 class="component-name">{{ component.name }}</h2>
+        <p class="component-description">{{ component.description }}</p>
+        <p class="component-price">Price: {{ currencySymbol }} {{ component.price * currencyMultiplier * component.priceModifier }}</p>
+        <p class="component-stock">Stock: {{ component.stock }}</p>
+        <div class="sale-tag">On Sale!</div>
+    {% endif %}
+    {% if not component.isOnSale %}
+        <img class="component-image" src="{{ url_for('static', filename='images/' + component.image_url) }}" alt="{{ component.name }}">
+        <h2 class="component-name">{{ component.name }}</h2>
+        <p class="component-description">{{ component.description }}</p>
+        <p class="component-price">Price: {{ currencySymbol }} {{ component.price * currencyMultiplier }}</p>
+        <p class="component-stock">Stock: {{ component.stock }}</p>
+    {% endif %}
+</div>
+
+<form action="/order/{{ component.id }}" method="POST">
+    <input type="hidden" id="ID" name="{{ component.id }}">
+    <button type="submit">Order</button>
+</form>
+
+
+<br/>
+<h3>We promise a safe and trusted delivery! The product itself has no issues whatsoever!</h3>
+
+</script>
+{% endblock %}
+
